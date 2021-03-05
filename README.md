@@ -14,7 +14,8 @@ Exports calories from fddb.info (aggregated to a daily level) to a postgres data
 The python script connects to fddb.info and downloads the `tagebuch` containing all information entered in [FDDB-Extender](https://play.google.com/store/apps/details?id=com.fddb&hl=de&gl=US) (or some other platform). To authenticate it needs the user and password for the site, as well as a specific cookie. This cookie represents most likely the internal user id of fddb.info and without it beeing passed as a cookie header, the requests will just return a message, that there's no data available. You can retrieve it for example by using Chrome dev tools on the network tab, when you open fddb.info after beeing logged in.
 
 Example:
-(image)
+
+![Chrome Dev Tools](docs/chrome-dev-tools.png)
 
 After downloading the csv-file it will transform it into a python dataframe, do some calculations to aggregate the calories per day and insert it into the fddb table in postgres. If an entry already exists for that day, it will ignore it (so run it after having entered all data for the day, if you want to track it daily). Empty values (days with no calories recorded) will be ignored as well.
 
@@ -66,7 +67,9 @@ This can be run in a cronjob (or k8s job, if you have that) to update the databa
 
 Well, you got the data, obviously. I like to display it in Grafana with some stats as well.
 
-(image)
+![Chrome Dev Tools](docs/grafana-panel.png)
+
+Just use a simple query to retrieve the information in Grafana.
 
 ```
 SELECT
