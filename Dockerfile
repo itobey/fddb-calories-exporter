@@ -1,8 +1,13 @@
 # never use a development version as requirements for pip install are not met
-FROM python:3.9.2-buster
+FROM python:3.9.2-alpine3.13
 
-RUN apt-get update && \
-	apt-get upgrade -y 
+RUN apk update && apk upgrade
+
+RUN apk add --update curl gcc g++ postgresql-dev
+RUN ln -s /usr/include/locale.h /usr/include/xlocale.h
+
+RUN apk add --no-cache tzdata
+ENV TZ=Europe/Berlin
 
 COPY requirements.txt /
 
