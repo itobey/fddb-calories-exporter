@@ -55,7 +55,7 @@ FDDB_POSTGRES contains the entire connection string for the postgres database. I
 
 ## Docker
 
-You may just run my prebuilt image or build it yourself. When using alpine as a base image, keep in mind that the requirements (like pandas) have to be compiled from source and it may take a long time. Also I do not recommend using a development version of the regular debian python image, as I ran into problems with requirements when installing dependencies with `pip`.
+You may just run my [prebuilt image](https://hub.docker.com/repository/docker/itobey/fddb-calories-exporter) or build it yourself. When using alpine as a base image, keep in mind that the requirements (like pandas) have to be compiled from source and it may take a long time. Also I do not recommend using a development version of the regular debian python image, as I ran into problems with requirements when installing dependencies with `pip`.
 
 I also recommend using an `.env` file to store all variables and pass it to the container on runtime. Just add the variables mentioned above in a file delimited by a `=`.
 
