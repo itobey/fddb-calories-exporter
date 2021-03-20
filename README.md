@@ -11,7 +11,7 @@ Exports calories from fddb.info (aggregated to a daily level) to a postgres data
 
 ## How it works
 
-The python script connects to fddb.info and downloads the `tagebuch` containing all information entered in [FDDB-Extender](https://play.google.com/store/apps/details?id=com.fddb&hl=de&gl=US) (or some other platform). To authenticate it needs the user and password for the site, as well as a specific cookie. This cookie represents most likely the internal user id of fddb.info and without it beeing passed as a cookie header, the requests will just return a message, that there's no data available. You can retrieve it for example by using Chrome dev tools on the network tab, when you open fddb.info after beeing logged in.
+The python script connects to fddb.info and downloads the `tagebuch` containing all information entered in [FDDB-Extender](https://play.google.com/store/apps/details?id=com.fddb&hl=de&gl=US) (or some other platform). To authenticate it needs the user and password for the site, as well as a specific cookie. This cookie is valid until you are logged out and without it beeing passed as a cookie header, the requests will just return a message, that there's no data available. You can retrieve it for example by using Chrome dev tools on the network tab, when you open fddb.info after beeing logged in. Remember that if you log out of your current browser session, the cookie will get invalid and the script will fail. I may redesign the script to obtain the cookie on login in the future.
 
 Example:
 
