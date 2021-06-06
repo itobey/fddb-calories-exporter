@@ -17,7 +17,7 @@ Example:
 
 ![Chrome Dev Tools](docs/chrome-dev-tools.png)
 
-After downloading the csv-file it will transform it into a python dataframe, do some calculations to aggregate the calories per day and insert it into the fddb table in postgres. If an entry already exists for that day, it will ignore it (so run it after having entered all data for the day, if you want to track it daily). Empty values (days with no calories recorded) will be ignored as well.
+After downloading the csv-file it will transform it into a python dataframe, do some calculations to aggregate the calories per day and insert it into the fddb table in postgres. If an entry already exists for that day, it will update it. Empty values (days with no calories recorded) will be ignored.
 
 ## Database
 
@@ -62,6 +62,40 @@ I also recommend using an `.env` file to store all variables and pass it to the 
 `docker run --rm --network=<the-network-with-postgres> --env-file /path/to/.env fddb-calories-exporter python exporter.py`
 
 This can be run in a cronjob (or k8s job, if you have that) to update the database every day.
+
+## Kubernetes
+
+When I have migrated to K3s I decided to run this as a Kubernetes Cronjob. I'm using helm sops with ArgoCD to encrypt the environment variables. Feel free to use other tools for this job.
+
+```
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: fddb-exporter
+spec:
+  schedule: "55 23 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: fddb-exporter
+            image: itobey/fddb-calories-exporter
+            imagePullPolicy: IfNotPresent
+            env:
+            - name: FDDB_USER
+              value: "{{ .Values.fddb.user}}" 
+            - name: FDDB_PW
+              value: "{{ .Values.fddb.pw}}" 
+            - name: FDDB_COOKIE
+              value: "{{ .Values.fddb.cookie}}" 
+            - name: FDDB_POSTGRES
+              value: "{{ .Values.fddb.postgres}}" 
+            command:
+            - python
+            - exporter.py
+          restartPolicy: OnFailure
+```
 
 ## Benefits
 
