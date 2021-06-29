@@ -1,5 +1,5 @@
 # never use a development version as requirements for pip install are not met
-FROM python:3.9.2-alpine3.13
+FROM python:3.9.6-alpine3.13
 
 RUN apk update && apk upgrade
 
