@@ -1,3 +1,7 @@
+# DEPRECATED
+
+Please see this newer project: [FDDB-Exporter](https://github.com/itobey/fddb-exporter)
+
 # Fddb-Calories-Exporter
 
 Exports calories from fddb.info (aggregated to a daily level) to a postgres database. This is a small project I used to learn Python and dataframes.
